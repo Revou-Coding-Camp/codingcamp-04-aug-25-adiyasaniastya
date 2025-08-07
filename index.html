@@ -21,19 +21,19 @@
         <main class="p-5">
             <div>
                 <form id="todo-form" class="grid grid-cols-4 gap-x-2 gap-y-4" >
-                <input type="text" id="todo-input" placeholder="Add a new task" class="border-2 rounded-l-lg" required >
-                <select name="status" id="status" id="todo-input" placeholder="Urgency" class="border-2 dark:text-white " required>
-                    <option value="" selected disabled>Pilih urgensi</option>
-                    <option class="bg-blue-200">Penting</option>
-                    <option class="bg-blue-200">Delegasi</option>
-                    <option class="bg-blue-200">Abaikan</option>
-                    <option class="bg-blue-200">Rencana</option>
-                    <option class="bg-blue-200">Super Urgent</option>
-                </select>
-                <input type="date" id="todo-date" placeholder="Add a date"  class="border-double border-2 rounded-r-lg" required>
-                <button type="button" id="todo-add" class="bg-sky-500 hover:bg-sky-700 btn focus:outline-2 rounded-lg p-2 border-2 border-double">Add Task</button>
-                
-            </form>
+                    <input type="text" id="todo-input" placeholder="Add a new task" class="border-2 rounded-l-lg" required >
+                    <select name="status" id="todo-urgency" id="todo-input" placeholder="Urgency" class="border-2 dark:text-white " required>
+                        <option value="" selected disabled>Pilih urgensi</option>
+                        <option class="bg-blue-200">Penting</option>
+                        <option class="bg-blue-200">Delegasi</option>
+                        <option class="bg-blue-200">Abaikan</option>
+                        <option class="bg-blue-200">Rencana</option>
+                        <option class="bg-blue-200">Super Urgent</option>
+                    </select>
+                    <input type="date" id="todo-date" placeholder="Add a date"  class="border-double border-2 rounded-r-lg" required>
+                    <button type="button" id="todo-add" class="bg-sky-500 hover:bg-sky-700 btn focus:outline-2 rounded-lg p-2 border-2 border-double">Add Task</button>
+                    
+                </form>
             </div>
             <div class="container-display-todo">
 

@@ -1,16 +1,21 @@
 function main() {
-    const authorName = 'brewokzcuyy'
+    const authorName = 'brewokzcuyy';
     function validateForm() {
-        const todoInput = document.getElementById('todo-input');
-        const todoDate = document.getElementById('todo-date');
-        console.log('todoInput 1: ', todoInput)
+        const todoInput = document.getElementById('todo-input').value;
+        const todoDate = document.getElementById('todo-date').value;
+        const todoUrgency = document.getElementById('todo-urgency').value;
+        console.log('todourgency: ', todoUrgency)
 
-        if (todoInput === '' || todoDate === ''){
-            alert('masih kosong')
+        if (todoInput === '' || todoDate === '' ||todoUrgency === ''){
+            alert('Silahkan isi dengan lengkap terlebih dahulu')
         }
     }
+
+    // validasi add task
     const addBtn = document.getElementById('todo-add')
-    addBtn.onclick = validateForm()
+    addBtn.addEventListener('click', function(){
+        validateForm();
+    })
     // footer
     const copyrightFooter = document.getElementById('copyright-footer')
     const year = new Date().getFullYear()
