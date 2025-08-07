@@ -3,3 +3,7 @@
     font-family: 'Courier New', Courier, monospace;
     color: #0051ff;
 }
+
+@theme{
+    --radius-5xl: 1rem; 
+}
