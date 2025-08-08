@@ -7,3 +7,22 @@
 @theme{
     --radius-5xl: 1rem; 
 }
+
+.row-btn-top{
+    position: relative;
+}
+#deleteall-todo{
+    right:0;
+    float:right;
+    font-size: 14px;
+
+}
+
+#search-bar{
+    padding: 5px 10px;
+}
+
+.delete-btn{
+    border: 1px solid black;
+    color: red;
+}
