@@ -4,13 +4,13 @@ function main() {
         const todoInput = document.getElementById('todo-input').value;
         const todoDate = document.getElementById('todo-date').value;
         const todoUrgency = document.getElementById('todo-urgency').value;
-
+        const todoForm = document.getElementById('todo-form')
         if (todoInput === '' || todoDate === '' ||todoUrgency === ''){
             alert('Silahkan isi dengan lengkap terlebih dahulu')
         } else{
             addTask(todoInput, todoDate, todoUrgency);
             updateNoDataVisibility();
-
+            todoForm.reset();
         }
     }
     // variable DB menyimpan seluruh to do list
