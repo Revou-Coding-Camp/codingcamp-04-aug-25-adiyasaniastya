@@ -67,12 +67,8 @@ function main() {
         noDataRow.style.display = hasVisible ? 'none' : '';
     }
 
-    function sorting(){
-
-    }
     // searching
     const input = document.getElementById('search-task');
-    //const tbody = document.getElementById('todolist-data');
     const searchBtn = document.getElementById('searchBtn')
     const tbody = document.getElementById('todolist-data');
     const noDataRow = document.getElementById('noData');
@@ -158,7 +154,6 @@ function main() {
     deleteAllButton.addEventListener('click', function(){
         deleteAllTask(todoArray);
         updateNoDataVisibility();
-
     })
 
     // delete per task
