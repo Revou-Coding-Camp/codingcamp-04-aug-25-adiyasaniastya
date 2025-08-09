@@ -10,26 +10,51 @@ function main() {
             alert('Silahkan isi dengan lengkap terlebih dahulu')
         } else{
             addTask(todoInput, todoDate, todoUrgency);
-            showTask(todoArray)
+            updateNoDataVisibility();
+
         }
     }
     // variable DB menyimpan seluruh to do list
     let todoArray = [];
-    const dummyTask = {
-        'id' : 'aa-2025-08-25-Penting',
-        'todo' : 'aa',
-        'date' : '2025-08-25',
-        'urgency' : 'Penting', 
-    }
-    todoArray.push(dummyTask)
     function addTask(todo, date, urgency){
+        const todolistTable = document.getElementById('todolist-data')
+        const lenExistingTask = todoArray.length
+        const iterator = lenExistingTask + 1
+        const id = iterator+ '-' + todo + '-' + date + '-'+ urgency
         let task = {
-            'id' : todo + '-' + date + '-'+ urgency,
+            'id' : id,
             'todo' : todo,
             'date' : date, 
             'urgency' : urgency,
         }
+        const newRow = document.createElement('tr');
+        newRow.id = id
+        const newTodo = document.createElement('td');
+        newTodo.textContent = todo
+        newRow.appendChild(newTodo)
 
+        const newDate = document.createElement('td');
+        newDate.textContent = date
+        newRow.appendChild(newDate)
+
+        const newUrgency = document.createElement('td');
+        newUrgency.textContent = urgency
+        newRow.appendChild(newUrgency)
+
+        const btnTd = document.createElement('td');
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'delete'
+        delBtn.classList.add('bg-red-500', 'hover:bg-red-700','focus:outline-2', 'rounded-lg',  'border-2' ,'border-double', 'delete-todo', )
+        
+        delBtn.value = id
+        delBtn.addEventListener('click',function(){
+            const taskId = delBtn.value
+            console.log('taskId : ',taskId)
+            deleteTask(todoArray,taskId)
+        })
+        btnTd.appendChild(delBtn)
+        newRow.appendChild(btnTd)
+        todolistTable.appendChild(newRow)
         todoArray.push(task)
     }
     // validasi add task
@@ -37,14 +62,65 @@ function main() {
     addBtn.addEventListener('click', function(){
         validateForm();
     })
+    function updateNoDataVisibility() {
+        const allRows = Array.from(tbody.querySelectorAll('tr'))
+            .filter(r => r.id !== 'noData');
+        const hasVisible = allRows.some(r => r.style.display !== 'none');
+        noDataRow.style.display = hasVisible ? 'none' : '';
+    }
 
-    // footer
-    const copyrightFooter = document.getElementById('copyright-footer')
-    const year = new Date().getFullYear()
-    copyrightFooter.innerHTML =  '©' + year +' ' + copyrightFooter.innerHTML + ' ' + `<b>${authorName}</b>`;
-    copyrightFooter.style.fontStyle = 'italic';
+    function sorting(){
 
-    function showTask(todoArray){
+    }
+    // searching
+    const input = document.getElementById('search-task');
+    //const tbody = document.getElementById('todolist-data');
+    const searchBtn = document.getElementById('searchBtn')
+    const tbody = document.getElementById('todolist-data');
+    const noDataRow = document.getElementById('noData');
+    
+    function searchTask(){
+        
+        const colSelect = document.getElementById('columnSelect');
+        
+        let visibleCount = 0;
+        const colIndex   = colSelect.value;
+        const query = input.value.trim().toLowerCase();
+        const rows  = tbody.querySelectorAll('tr:not(#nodata)');
+        console.log('query : ',query)
+        console.log('colIndex : ',colIndex)
+        console.log('rows : ',rows)
+        rows.forEach(row => {
+            let textToSearch;
+
+            if (colIndex === 'all') {
+                textToSearch = Array.from(row.cells)
+                    .map(cell => cell.textContent.toLowerCase())
+                    .join(' ');
+                console.log('textToSearch : ',textToSearch)
+            } else {
+                textToSearch = row.cells[colIndex].textContent.toLowerCase();
+                console.log('textToSearch cols: ',textToSearch)
+            }
+            const match = textToSearch.includes(query);
+            console.log('match : ',match)
+            row.style.display = match ? '' : 'none';
+            if (match) visibleCount++;
+        });
+        noDataRow.style.display = visibleCount === 0 ? '' : 'none';
+    }
+    // trigger searching
+    searchBtn.addEventListener('click', () => {
+        searchTask();
+    });
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            searchTask();
+        }
+    });
+
+
+    function showAllTask(todoArray){
         const todolistTable = document.getElementById('todolist-data')
         todoArray.forEach(todo =>{
             const newRow = document.createElement('tr');
@@ -64,32 +140,48 @@ function main() {
             delBtn.textContent = 'delete'
             delBtn.classList.add('bg-red-500', 'hover:bg-red-700', 'btn', 'focus:outline-2', 'rounded-lg', 'px-2', 'py-0', 'border-2' ,'border-double', 'delete-todo')
             delBtn.value = todo['id']
+            delBtn.addEventListener('click',function(){
+                const taskId = btn.value
+                console.log('taskId : ',taskId)
+                deleteTask(todoArray,taskId)
+            })
             newRow.appendChild(delBtn)
             todolistTable.appendChild(newRow)
         });
+    }
+    function deleteAllTask(todoArray){
+        if (todoArray.length > 0){
+            todoArray.forEach(todo=>{
+                console.log('id : ', todo['id'])
+                const toDoRow = document.getElementById(todo['id'])
+                console.log('todorow : ', toDoRow)
+                toDoRow.remove()
+            })
+            todoArray = []
+        }else{
+            alert('Anda tidak memiliki task apapun^_^')
+        }
         
     }
-    showTask(todoArray)
-    function deleteAllTask(todoArray){
-        todoArray = []
-    }
+    // delete all 
     const deleteAllButton = document.getElementById('deleteall-todo')
     deleteAllButton.addEventListener('click', function(){
         deleteAllTask(todoArray);
+        updateNoDataVisibility();
+
     })
-    function deleteTask(todoArray, deleteId){
-        let newTodoArray=todoArray.filter(todo => todo['id'] !== deleteId);
-        console.log('new To do array : ', newTodoArray)
-        return newTodoArray;
+
+    // delete per task
+    function deleteTask(todoArray, taskId){
+        const deletedRow = document.getElementById(taskId)
+        deletedRow.remove();
     }
-    const deleteButton = document.querySelectorAll('.delete-todo');
-    deleteButton.forEach(btn =>
-        btn.addEventListener('click',function(){
-            const deleteId = btn.value
-            console.log('deleteId : ',deleteId)
-            deleteTask(todoArray,deleteId)
-        })
-    )
+
+    // footer
+    const copyrightFooter = document.getElementById('copyright-footer')
+    const year = new Date().getFullYear()
+    copyrightFooter.innerHTML =  '©' + year +' ' + copyrightFooter.innerHTML + ' ' + `<b>${authorName}</b>`;
+    copyrightFooter.style.fontStyle = 'italic';
 };
 
 main();

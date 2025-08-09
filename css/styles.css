@@ -22,7 +22,22 @@
     padding: 5px 10px;
 }
 
-.delete-btn{
+.delete-todo{
     border: 1px solid black;
-    color: red;
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+    padding: 5px;
+}
+
+#noData{
+    font-style: italic;
+    text-align: center;
+}
+
+tbody tr td{
+    padding : 5px;
+    text-align: center;
+    border: 1px solid black;
+    border-style: var(--tw-border-style);
 }
