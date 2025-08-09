@@ -1,10 +1,9 @@
 function main() {
-    const authorName = 'brewokzcuyy';
+    const authorName = 'Adiyasa Niastya Imam Fadhilah';
     function validateForm() {
         const todoInput = document.getElementById('todo-input').value;
         const todoDate = document.getElementById('todo-date').value;
         const todoUrgency = document.getElementById('todo-urgency').value;
-        console.log('todourgency: ', todoUrgency)
 
         if (todoInput === '' || todoDate === '' ||todoUrgency === ''){
             alert('Silahkan isi dengan lengkap terlebih dahulu')
@@ -49,7 +48,6 @@ function main() {
         delBtn.value = id
         delBtn.addEventListener('click',function(){
             const taskId = delBtn.value
-            console.log('taskId : ',taskId)
             deleteTask(todoArray,taskId)
         })
         btnTd.appendChild(delBtn)
@@ -78,7 +76,7 @@ function main() {
     const searchBtn = document.getElementById('searchBtn')
     const tbody = document.getElementById('todolist-data');
     const noDataRow = document.getElementById('noData');
-    
+
     function searchTask(){
         
         const colSelect = document.getElementById('columnSelect');
@@ -87,9 +85,6 @@ function main() {
         const colIndex   = colSelect.value;
         const query = input.value.trim().toLowerCase();
         const rows  = tbody.querySelectorAll('tr:not(#nodata)');
-        console.log('query : ',query)
-        console.log('colIndex : ',colIndex)
-        console.log('rows : ',rows)
         rows.forEach(row => {
             let textToSearch;
 
@@ -100,10 +95,8 @@ function main() {
                 console.log('textToSearch : ',textToSearch)
             } else {
                 textToSearch = row.cells[colIndex].textContent.toLowerCase();
-                console.log('textToSearch cols: ',textToSearch)
             }
             const match = textToSearch.includes(query);
-            console.log('match : ',match)
             row.style.display = match ? '' : 'none';
             if (match) visibleCount++;
         });
@@ -137,12 +130,11 @@ function main() {
             newRow.appendChild(newUrgency)
 
             const delBtn = document.createElement('button');
-            delBtn.textContent = 'delete'
+            delBtn.textContent = 'Hapus'
             delBtn.classList.add('bg-red-500', 'hover:bg-red-700', 'btn', 'focus:outline-2', 'rounded-lg', 'px-2', 'py-0', 'border-2' ,'border-double', 'delete-todo')
             delBtn.value = todo['id']
             delBtn.addEventListener('click',function(){
                 const taskId = btn.value
-                console.log('taskId : ',taskId)
                 deleteTask(todoArray,taskId)
             })
             newRow.appendChild(delBtn)
@@ -152,9 +144,7 @@ function main() {
     function deleteAllTask(todoArray){
         if (todoArray.length > 0){
             todoArray.forEach(todo=>{
-                console.log('id : ', todo['id'])
                 const toDoRow = document.getElementById(todo['id'])
-                console.log('todorow : ', toDoRow)
                 toDoRow.remove()
             })
             todoArray = []
